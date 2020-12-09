@@ -53,6 +53,7 @@ docker login -u oauth2accesstoken --password $ACCESS_TOKEN $INPUT_DOCKER_REGISTR
     chmod 400 "$HOME/.ssh/config"
     
     echo $INPUT_REMOTE_HOST
+    ssh -o StrictHostKeyChecking=no -T deploy@195.201.47.156 -p 222
 fi
 
 echo "Connecting to $INPUT_REMOTE_HOST..."
