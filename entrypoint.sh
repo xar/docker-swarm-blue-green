@@ -75,4 +75,5 @@ echo "Waiting..."
 sleep 5s
 
 echo "Stopping "$OLD" container"
-#docker stack rm $OLD
+docker stack rm $OLD
+echo "OK!"
