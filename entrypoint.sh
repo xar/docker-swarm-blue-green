@@ -68,6 +68,9 @@ else
     OLD=$INPUT_GREEN_NAME
 fi
 
+echo "Docker PS"
+docker --host "$INPUT_REMOTE_HOST" ps -f name=$INPUT_BLUE_NAME
+
 echo "Starting "$ENV" container"
 docker --log-level debug --host "$INPUT_REMOTE_HOST" "$@" $ENV 2>&1
 
