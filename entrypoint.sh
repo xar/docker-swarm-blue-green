@@ -21,11 +21,11 @@ if [ ${INPUT_REMOTE_HOST#"ssh://"} != "$INPUT_REMOTE_HOST" ]; then
         exit 1
     fi
 
-docker login -u oauth2accesstoken --password $ACCESS_TOKEN https://gcr.io
+docker login -u oauth2accesstoken --password $ACCESS_TOKEN $INPUT_DOCKER_REGISTRY
 
 
     if [ -z "$ACCESS_TOKEN" ]; then
-        docker login -u oauth2accesstoken --password $ACCESS_TOKEN https://gcr.io
+        docker login -u oauth2accesstoken --password $ACCESS_TOKEN $INPUT_DOCKER_REGISTRY
     fi
 
     echo "Registering SSH keys..."
@@ -57,4 +57,22 @@ docker login -u oauth2accesstoken --password $ACCESS_TOKEN https://gcr.io
 fi
 
 echo "Connecting to $INPUT_REMOTE_HOST..."
-docker --log-level debug --host "$INPUT_REMOTE_HOST" "$@" 2>&1
+
+
+if [ $(docker ps -f name=$INPUT_BLUE_NAME -q) ]
+then
+    ENV=$INPUT_GREEN_NAME
+    OLD=$INPUT_BLUE_NAME
+else
+    ENV=$INPUT_BLUE_NAME
+    OLD=$INPUT_GREEN_NAME
+fi
+
+echo "Starting "$ENV" container"
+docker --log-level debug --host "$INPUT_REMOTE_HOST" "$@" $ENV 2>&1
+
+echo "Waiting..."
+sleep 5s
+
+echo "Stopping "$OLD" container"
+docker stack rm $OLD
