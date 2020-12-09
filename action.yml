@@ -1,0 +1,31 @@
+name: docker-stack-blue-green-deployemnt
+author: Samuel Vrablik
+description: A GitHub Action that enables you to publish your app as a Docker stack to a remote Docker swarm.
+inputs:
+  remote_host:
+    description: Docker host to connect to
+    required: true
+  ssh_public_key:
+    description: SSH public key of the server
+    required: false
+  ssh_private_key:
+    description: SSH private key to use to connect
+    required: false
+  ssh_username:
+    description: SSH username use to connect
+    required: false
+  docker_registry:
+    description: Docker registry
+    required: false
+  blue_name:
+    description: Name of blue deployment
+    required: false
+  green_name:
+    description: Name of green deployment
+    required: false
+runs:
+  using: docker
+  image: Dockerfile
+branding:
+  icon: droplet
+  color: blue
