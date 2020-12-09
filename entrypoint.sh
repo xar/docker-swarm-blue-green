@@ -75,5 +75,5 @@ echo "Waiting..."
 sleep 5s
 
 echo "Stopping "$OLD" container"
-docker stack rm $OLD
+docker --log-level debug --host "$INPUT_REMOTE_HOST" stack rm $OLD
 echo "OK!"
