@@ -59,7 +59,7 @@ fi
 echo "Connecting to $INPUT_REMOTE_HOST..."
 
 
-if [ $(docker ps -f name=$INPUT_BLUE_NAME -q) ]
+if [ $(docker --host "$INPUT_REMOTE_HOST" ps -f name=$INPUT_BLUE_NAME -q) ]
 then
     ENV=$INPUT_GREEN_NAME
     OLD=$INPUT_BLUE_NAME
