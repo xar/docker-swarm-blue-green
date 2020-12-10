@@ -58,13 +58,14 @@ fi
 
 echo "Connecting to $INPUT_REMOTE_HOST..."
 
-
-if [ $(docker --host "$INPUT_REMOTE_HOST" ps -f name=$INPUT_BLUE_NAME -q) ]; then
-    ENV=$INPUT_GREEN_NAME
-    OLD=$INPUT_BLUE_NAME
-else
+if [ -z "$(docker --host "$INPUT_REMOTE_HOST" ps -f name=$INPUT_BLUE_NAME -q)" ]; then
+    echo "blue"
     ENV=$INPUT_BLUE_NAME
     OLD=$INPUT_GREEN_NAME
+else
+    echo "green"
+    ENV=$INPUT_GREEN_NAME
+    OLD=$INPUT_BLUE_NAME
 fi
 
 echo "Docker PS"
